@@ -4,6 +4,7 @@ import mongoose from 'mongoose'
 import connectDB  from './config/database.js';
 import flowerRoute from './routes/flower.route.js';
 import Flower from './models/Flower.model.js';
+import userRoute from './routes/User.route.js';
 
 const app = express();
 const PORT = 3000;
@@ -13,6 +14,7 @@ app.use(cors({origin:"*"}));
 
 
 app.use("/api/flowers",flowerRoute)
+app.use("/api/user",userRoute)
 //port connction 
 app.listen(PORT, async() => {
     await connectDB();
