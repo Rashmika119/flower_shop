@@ -1,18 +1,32 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
 
 function LogIn() {
     const[password,setPassword]=useState('');
-    const[email,setEmail]=useState('');
+    const[username,setUsername]=useState('');
      
         const handlePasswordChange=(event)=>{
             setPassword(event.target.value);
         };
         
         
-        const handleEmailChange=(event)=>{
-            setEmail(event.target.value);
+        const handleUsernameChange=(event)=>{
+            setUsername(event.target.value);
         };
         
+        const handleLogIn=async()=>{
+            if(password && username){
+                try {
+                    const response=await axios.post("/api/user/loginUser",{username,password});
+                  alert(response.data.message);  
+                } catch (error) {
+                    alert(error.response.data.message || "Login failed")
+                }
+            }
+            else{
+                alert("Please enter username and password");
+            }
+        }
         
     
   return (
@@ -22,7 +36,7 @@ function LogIn() {
     <div>
         <p>Welcome back to Flower & Bloom</p>
         <div>
-        <input placeholder="Enter your Email" type='email' value={email} onChange={handleEmailChange}/>
+        <input placeholder="Enter your Username" type='text' value={username} onChange={handleUsernameChange}/>
         <input placeholder="Enter your Password" type='password' value={password} onChange={handlePasswordChange}/>
         </div>
         <div>
