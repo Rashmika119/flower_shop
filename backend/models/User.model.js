@@ -1,13 +1,29 @@
 import mongoose from "mongoose";
 
 const userSchema=new mongoose.Schema({
-    usename:{
+    username:{
         type:String,
         required:true,
-        unique:true,
+    
     },
     password:{
         type:String,
+    },
+    email:{
+        type:String,
+        required:true,
+            unique:true,
+    },
+    googleId:{
+        type:String
+    },
+    provider:{
+        type:String,
+        enum:['EMAIL_PASSWORD','GOOGLE'],
+        required:true,
+    },
+    cartId:{
+        type:mongoose.Schema.Types.ObjectId,
         required:true,
     }
 })

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Menu,X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -20,13 +20,13 @@ function Header() {
                             Flower & Bloom
                         </span>
                     </div>
-                    
+
                     {/* Desktop Navigation */}
                     <nav className='hidden md:block'>
                         <ul className='flex items-center gap-6 lg:gap-8'>
                             <li>
-                                <Link 
-                                    to="/" 
+                                <Link
+                                    to="/"
                                     className='relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base'
                                 >
                                     Home
@@ -34,8 +34,8 @@ function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link 
-                                    to="/allitems" 
+                                <Link
+                                    to="/allitems"
                                     className='relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base'
                                 >
                                     All Items
@@ -43,8 +43,8 @@ function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link 
-                                    to="/aboutUs" 
+                                <Link
+                                    to="/aboutUs"
                                     className='relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base'
                                 >
                                     About Us
@@ -52,11 +52,38 @@ function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link 
-                                    to="/contactus" 
+                                <Link
+                                    to="/contactus"
                                     className='relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base'
                                 >
                                     Contact Us
+                                    <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300'></span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/signUp"
+                                    className='relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base'
+                                >
+                                    SignUp
+                                    <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300'></span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/logIn"
+                                    className='relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base'
+                                >
+                                    LogIn
+                                    <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300'></span>
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/cartDetails"
+                                    className='relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base'
+                                >
+                                    🛒
                                     <span className='absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300'></span>
                                 </Link>
                             </li>
@@ -64,12 +91,12 @@ function Header() {
                     </nav>
 
                     {/* Mobile Menu Button */}
-                    <button 
+                    <button
                         onClick={toggleMenu}
                         className='md:hidden p-2 rounded-full hover:bg-rose-50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-rose-300'
                         aria-label="Toggle menu"
                     >
-                       {isMenuOpen ?    <X />:<Menu />}
+                        {isMenuOpen ? <X /> : <Menu />}
                     </button>
                 </div>
 
@@ -78,8 +105,8 @@ function Header() {
                     <nav className='py-4 border-t border-rose-100/50 mt-3'>
                         <ul className='space-y-3'>
                             <li>
-                                <Link 
-                                    to="" 
+                                <Link
+                                    to=""
                                     onClick={toggleMenu}
                                     className='block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300'
                                 >
@@ -87,8 +114,8 @@ function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link 
-                                    to="/allItems" 
+                                <Link
+                                    to="/allItems"
                                     onClick={toggleMenu}
                                     className='block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300'
                                 >
@@ -96,8 +123,8 @@ function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link 
-                                    to="/aboutUs" 
+                                <Link
+                                    to="/aboutUs"
                                     onClick={toggleMenu}
                                     className='block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300'
                                 >
@@ -105,12 +132,30 @@ function Header() {
                                 </Link>
                             </li>
                             <li>
-                                <Link 
-                                    to="/contactUs" 
+                                <Link
+                                    to="/contactUs"
                                     onClick={toggleMenu}
                                     className='block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300'
                                 >
                                     📞 Contact Us
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/signUp"
+                                    onClick={toggleMenu}
+                                    className='block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300'
+                                >
+                                    SignUp
+                                </Link>
+                            </li>
+                            <li>
+                                <Link
+                                    to="/logIn"
+                                    onClick={toggleMenu}
+                                    className='block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300'
+                                >
+                                    LogIn
                                 </Link>
                             </li>
                         </ul>

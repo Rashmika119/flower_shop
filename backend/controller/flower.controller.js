@@ -27,6 +27,7 @@ export const getAllFlowers=async(req,res)=>{
     }
 
 }
+
 export const getFlowerDetails=async(req,res)=>{
     try {
         const flowerId=req.params.id;

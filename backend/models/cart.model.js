@@ -10,15 +10,7 @@ const cartSchema = new mongoose.Schema({
             type: Number,
             default: 1
         },
-
-
     }],
-    useId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-    }
-
-
-
 })
 const Cart = mongoose.model('Cart', cartSchema);
+export default Cart;

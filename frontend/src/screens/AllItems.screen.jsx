@@ -11,7 +11,7 @@ function AllItems() {
   useEffect(() => {
     const fetchFlowers = async () => {
       try {
-          const response = await useAxios.get('/api/flowers/getAllFlowers')
+          const response = await useAxios.get('/flowers/getAllFlowers')
       if (response.status == 200) {
         setflowers(response.data.data)
       }

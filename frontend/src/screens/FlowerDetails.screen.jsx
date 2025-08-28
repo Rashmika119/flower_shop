@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import DetailsCard from '../components/DetailsCard';
 import { useParams } from 'react-router-dom';
-import useAxios from '../config/axiosConfig';
+import useAxios, { JWTAxios } from '../config/axiosConfig';
 
 function FlowerDetails() {
     const id=useParams().id;
@@ -12,7 +12,7 @@ function FlowerDetails() {
             const fetchFlowerDetails=async()=>{
                 
                 try {
-                    const response=await useAxios.get(`/api/flowers/getFlowerDetails/${id}`);
+                    const response=await JWTAxios.get(`/flowers/getFlowerDetails/${id}`);
                     if(response.status==200){
                         setFlowerDetails(response.data.data);
                     }else{
