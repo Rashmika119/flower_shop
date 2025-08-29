@@ -41,7 +41,7 @@ function App() {
         }
       );
 
-      if (responce.status == 200) {
+      if (responce.status == 200 || responce.status == 201) {
         toast.success("User login successfully", {
           position: "top-center",
           autoClose: 5000,

@@ -1,6 +1,5 @@
 import axios from "axios";
-import { act } from "react";
-import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 export const useAxios = axios.create({
   baseURL: "https://localhost:5000/api",
