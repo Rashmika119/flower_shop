@@ -2,7 +2,7 @@ import axios from "axios";
 import { act } from "react";
 import Cookies from "js-cookie";
 
-const useAxios = axios.create({
+export const useAxios = axios.create({
   baseURL: "https://localhost:5000/api",
   timeout: 1000,
   headers: {
@@ -34,7 +34,7 @@ JWTAxios.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-JWTAxios.interceptors.response.use(
+/*JWTAxios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
@@ -63,4 +63,4 @@ JWTAxios.interceptors.response.use(
   }
 );
 
-export default useAxios;
+export default useAxios;*/

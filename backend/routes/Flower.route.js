@@ -1,10 +1,12 @@
-import express from 'express';
-import { getAllFlowers, getFlowerDetails } from '../controller/flower.controller.js';
-import { verifyAccessToken } from '../middleware/Auth.js';
+import express from "express";
+import {
+  getAllFlowers,
+  getFlowerDetails,
+} from "../controller/flower.controller.js";
 
-const flowerRoute=express.Router();
+const flowerRoute = express.Router();
 
-flowerRoute.get('/getAllFlowers',getAllFlowers)
-flowerRoute.get('/getFlowerDetails/:id',verifyAccessToken, getFlowerDetails)
+flowerRoute.get("/getAllFlowers", getAllFlowers);
+flowerRoute.get("/getFlowerDetails/:id", getFlowerDetails);
 
-export default flowerRoute
+export default flowerRoute;

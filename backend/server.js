@@ -3,35 +3,21 @@ import cors from "cors";
 import connectDB from "./config/database.js";
 import flowerRoute from "./routes/flower.route.js";
 import userRoute from "./routes/User.route.js";
-import cookieParser from "cookie-parser";
 import dotenv from "dotenv";
-import session from "express-session";
 import cartRoute from "./routes/Cart.route.js";
 import startHTTPSServer from "./config/HttpsServer.js";
+import authRouter from "./routes/Auth.route.js";
 
 dotenv.config();
 
 const app = express();
 
 app.use(express.json());
-app.use(cookieParser()); //use as middleware to parse cookie to the frontend
-
-app.use(
-  session({
-    secret: "throwaway-passport-bridge",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      secure: process.env.COOKIE_SECURE === "true",
-      sameSite: "lax",
-    },
-  })
-);
 
 //backend can access from any URl
 app.use(
   cors({
-    origin: "http://localhost:5173", // Your frontend URL
+    origin: "https://localhost:5173", // Your frontend URL
     credentials: true, // This is the key setting
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -39,8 +25,17 @@ app.use(
 );
 
 app.use("/api/flowers", flowerRoute);
+
 app.use("/api/user", userRoute);
+
 app.use("/api/cart", cartRoute);
+
+app.use("/api/auth", authRouter);
+
+app.use((err, req, res, next) => {
+  console.error(err);
+  res.status(err.status).json({ error: err.message });
+});
 
 const PORT = process.env.PORT || 5000;
 

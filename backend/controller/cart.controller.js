@@ -1,4 +1,4 @@
-import Cart from "../models/cart.model.js";
+import Cart from "../models/Cart.model.js";
 import Flower from "../models/Flower.model.js";
 
 export const getCartItems = async (req, res) => {

@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
+import DarkmoodToggler from "../darkmoodtogler/DarkmodeTogler";
+import { useSelector } from "react-redux";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { loginWithRedirect, logout } = useAuth0();
+  const islogin = useSelector((state) => state.user.isLogedIn);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -20,7 +23,7 @@ function Header() {
   };
 
   return (
-    <header className="top-0 left-0 right-0 z-50 backdrop-blur-md bg-white/80 border-b border-rose-100/50 shadow-sm">
+    <header className="relative top-0 left-0 right-0 z-50   backdrop-blur-md bg-white/80 border-b border-rose-100/50 shadow-sm">
       <div className=" max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -72,7 +75,7 @@ function Header() {
                   <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
                 </Link>
               </li>
-              {isAuthenticated ? (
+              {islogin ? (
                 <>
                   <li>
                     <Link
@@ -105,6 +108,9 @@ function Header() {
                   </button>
                 </li>
               )}
+              <li>
+                <DarkmoodToggler />
+              </li>
             </ul>
           </nav>
 
