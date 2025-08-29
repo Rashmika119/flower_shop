@@ -1,10 +1,10 @@
 import passport from "passport";
-import { Strategy as GoogleStrategy} from "passport-google-oauth20";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import dotenv from "dotenv";
 import User from "../models/User.model.js";
 import Cart from "../models/cart.model.js";
 
-dotenv.configDotenv();
+dotenv.config();
 
 //store user data(userID) in session
 passport.serializeUser((user, done) => done(null, user));
@@ -39,9 +39,9 @@ passport.use(
           const newCart = new Cart();
           await newCart.save();
           user = await User.create({
-            username:profile.displayName,
+            username: profile.displayName,
             email,
-            provider:"GOOGLE",
+            provider: "GOOGLE",
             cartId: newCart._id,
           });
           return done(null, user);
