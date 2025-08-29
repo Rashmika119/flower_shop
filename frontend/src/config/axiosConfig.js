@@ -23,44 +23,25 @@ export const JWTAxios = axios.create({
 JWTAxios.interceptors.request.use(
   (config) => {
     const accessToken = localStorage.getItem("accessToken");
-    if (!accessToken) {
-      window.location.href = "/logIn";
+    const userId = localStorage.getItem("userId");
+    if (!accessToken && !userId) {
+      toast.error("please sign in", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
     }
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
+    config.headers.Authorization = `Bearer ${accessToken}`;
+
+    config.headers.userId = userId;
+
     return config;
   },
   (error) => Promise.reject(error)
 );
-
-/*JWTAxios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      try {
-        const res = await useAxios.post("/user/newAccessToken");
-
-        const newAccessToken = res.data.accessToken;
-
-        localStorage.setItem("accessToken", newAccessToken);
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-        return JWTAxios(originalRequest);
-      } catch (error) {
-        console.log("token refresh fail");
-
-        localStorage.removeItem("accessToken");
-        Cookies.remove("refreshToken");
-        window.location.href = "/logIn";
-      }
-    }
-
-    return Promise.reject(error);
-  }
-);
-
-export default useAxios;*/
