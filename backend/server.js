@@ -44,5 +44,5 @@ app.use("/api/cart", cartRoute);
 
 const PORT = process.env.PORT || 5000;
 
-//using https library expre app run with https
+//using https library express app run with https
 startHTTPSServer(app, PORT, connectDB);

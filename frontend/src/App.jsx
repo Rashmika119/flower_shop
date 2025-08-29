@@ -1,13 +1,12 @@
-import React from 'react'
-
-import Nav from './Nav'
+import React from "react";
+import Navigation from "./navigation/Navigation";
 
 function App() {
   return (
     <>
-    <Nav/>
+      <Navigation />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
