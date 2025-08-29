@@ -12,8 +12,8 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Provider store={store}>
       <Auth0Provider
-        domain="dev-0b3jh700mwszqd4e.us.auth0.com"
-        clientId="YY2qMgeB4BlEY4gsLvOkHfPe3N1oLTyO"
+        domain={domain}
+        clientId={clientid}
         authorizationParams={{
           redirect_uri: window.location.origin,
           audience: "https://localhost:5000",

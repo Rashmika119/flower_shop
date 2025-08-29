@@ -5,7 +5,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -13,6 +13,10 @@ function Header() {
 
   const handleLogin = async () => {
     await loginWithRedirect();
+  };
+
+  const handleLogout = async () => {
+    await logout();
   };
 
   return (
@@ -69,15 +73,27 @@ function Header() {
                 </Link>
               </li>
               {isAuthenticated ? (
-                <li>
-                  <Link
-                    to="/cartDetails"
-                    className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
-                  >
-                    🛒
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
-                  </Link>
-                </li>
+                <>
+                  <li>
+                    <Link
+                      to="/cartDetails"
+                      className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                    >
+                      🛒
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                    </Link>
+                  </li>
+
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                    >
+                      Logout
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                    </button>
+                  </li>
+                </>
               ) : (
                 <li>
                   <button

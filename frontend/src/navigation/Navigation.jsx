@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AboutUs from "../screens/AboutUs.screen";
-import Home from "../screens/Home.screen";
+import Home from "../screens/home/Home.screen";
 import AllItems from "../screens/AllItems.screen";
 import ContactUs from "../screens/ContactUs.screen";
 import Layout from "../components/layout";
