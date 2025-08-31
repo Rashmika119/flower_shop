@@ -2,11 +2,10 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AboutUs from "../screens/about/AboutUs.screen";
 import Home from "../screens/home/Home.screen";
 import AllItems from "../screens/allitems/AllItems.screen";
-
 import Layout from "../components/layout/Layout";
-import FlowerDetails from "../screens/FlowerDetails.screen";
 import CartScreen from "../screens/CartScreen.sreen";
 import ContactUs from "../screens/contact/ContactUs.screen";
+import FlowerDetails from "../screens/flowerdetails/FlowerDetails.screen";
 
 const Navigation = () => {
   return (
