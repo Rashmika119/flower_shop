@@ -1,2 +1,62 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Light Mode Colors */
+  --color-primary: oklch(0.65 0.15 350); /* Rose primary */
+  --color-secondary: oklch(0.75 0.12 320); /* Pink secondary */
+  --color-accent: oklch(0.55 0.18 25); /* Warm accent */
+  --color-background: oklch(0.98 0.01 350); /* Soft rose background */
+  --color-surface: oklch(0.95 0.02 350); /* Card/surface color */
+  --color-text: oklch(0.25 0.02 250); /* Dark text */
+
+  /* Dark Mode Colors */
+  --color-primary-dark: oklch(0.7 0.15 350); /* Lighter rose for dark mode */
+  --color-secondary-dark: oklch(0.8 0.12 320); /* Lighter pink for dark mode */
+  --color-accent-dark: oklch(0.75 0.15 25); /* Brighter warm accent */
+  --color-background-dark: oklch(0.15 0.02 350); /* Dark rose background */
+  --color-surface-dark: oklch(0.2 0.03 350); /* Dark surface */
+  --color-text-dark: oklch(0.9 0.01 350); /* Light text */
+}
+
+:root {
+  --primary: var(--color-primary);
+  --secondary: var(--color-secondary);
+  --accent: var(--color-accent);
+  --background: var(--color-background);
+  --surface: var(--color-surface);
+  --text: var(--color-text);
+}
+
+.dark {
+  --primary: var(--color-primary-dark);
+  --secondary: var(--color-secondary-dark);
+  --accent: var(--color-accent-dark);
+  --background: var(--color-background-dark);
+  --surface: var(--color-surface-dark);
+  --text: var(--color-text-dark);
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(to right, var(--primary), var(--secondary));
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.bg-surface {
+  background-color: var(--surface);
+}
+
+.bg-background {
+  background-color: var(--background);
+}
+
+.text-main {
+  color: var(--text);
+}
+
+.border-primary {
+  border-color: var(--primary);
+}

@@ -23,56 +23,59 @@ function Header() {
   };
 
   return (
-    <header className="relative top-0 left-0 right-0 z-50   backdrop-blur-md bg-white/80 border-b border-rose-100/50 shadow-sm">
-      <div className=" max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+    <header className="relative top-0 left-0 right-0 z-50 backdrop-blur-md bg-surface border-b border-primary/20 shadow-sm">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2 sm:gap-3 group cursor-pointer">
-            <span className="text-2xl sm:text-3xl group-hover:scale-110 transition-transform duration-300">
+          <Link
+            to="/"
+            className="flex items-center gap-2 sm:gap-3 group cursor-pointer"
+          >
+            <span className="text-xl sm:text-2xl md:text-3xl group-hover:scale-110 transition-transform duration-300">
               🌺
             </span>
-            <span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-rose-600 via-pink-600 to-rose-600 bg-clip-text text-transparent">
+            <span className="text-base sm:text-lg md:text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
               Flower & Bloom
             </span>
-          </div>
+          </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:block">
-            <ul className="flex items-center gap-6 lg:gap-8">
+          <nav className="hidden lg:block">
+            <ul className="flex items-center gap-4 xl:gap-8">
               <li>
                 <Link
                   to="/"
-                  className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                  className="relative text-main font-medium hover:text-primary transition-colors duration-300 group text-sm xl:text-base"
                 >
                   Home
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
                 </Link>
               </li>
               <li>
                 <Link
                   to="/allitems"
-                  className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                  className="relative text-main font-medium hover:text-primary transition-colors duration-300 group text-sm xl:text-base"
                 >
                   All Items
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
                 </Link>
               </li>
               <li>
                 <Link
                   to="/aboutUs"
-                  className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                  className="relative text-main font-medium hover:text-primary transition-colors duration-300 group text-sm xl:text-base"
                 >
                   About Us
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
                 </Link>
               </li>
               <li>
                 <Link
                   to="/contactus"
-                  className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                  className="relative text-main font-medium hover:text-primary transition-colors duration-300 group text-sm xl:text-base"
                 >
                   Contact Us
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
                 </Link>
               </li>
               {islogin ? (
@@ -80,20 +83,18 @@ function Header() {
                   <li>
                     <Link
                       to="/cartDetails"
-                      className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                      className="relative text-main font-medium hover:text-primary transition-colors duration-300 group text-lg xl:text-xl"
                     >
                       🛒
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
                     </Link>
                   </li>
-
                   <li>
                     <button
                       onClick={handleLogout}
-                      className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                      className="bg-gradient-to-r from-primary to-secondary text-white px-3 xl:px-4 py-1.5 xl:py-2 rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-300 text-sm xl:text-base"
                     >
                       Logout
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
                     </button>
                   </li>
                 </>
@@ -101,13 +102,71 @@ function Header() {
                 <li>
                   <button
                     onClick={handleLogin}
-                    className="relative text-gray-700 font-medium hover:text-rose-600 transition-colors duration-300 group text-sm lg:text-base"
+                    className="bg-gradient-to-r from-primary to-secondary text-white px-3 xl:px-4 py-1.5 xl:py-2 rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-300 text-sm xl:text-base"
                   >
-                    LogIn
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-rose-500 to-pink-500 group-hover:w-full transition-all duration-300"></span>
+                    Login
                   </button>
                 </li>
               )}
+              <li className="ml-2">
+                <DarkmoodToggler />
+              </li>
+            </ul>
+          </nav>
+
+          {/* Tablet Menu (md to lg) */}
+          <nav className="hidden md:block lg:hidden">
+            <ul className="flex items-center gap-3">
+              <li>
+                <Link
+                  to="/"
+                  className="text-main hover:text-primary transition-colors duration-300 text-sm font-medium"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/allitems"
+                  className="text-main hover:text-primary transition-colors duration-300 text-sm font-medium"
+                >
+                  Items
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/aboutUs"
+                  className="text-main hover:text-primary transition-colors duration-300 text-sm font-medium"
+                >
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contactus"
+                  className="text-main hover:text-primary transition-colors duration-300 text-sm font-medium"
+                >
+                  Contact
+                </Link>
+              </li>
+              {islogin && (
+                <li>
+                  <Link
+                    to="/cartDetails"
+                    className="text-main hover:text-primary transition-colors duration-300 text-lg"
+                  >
+                    🛒
+                  </Link>
+                </li>
+              )}
+              <li>
+                <button
+                  onClick={islogin ? handleLogout : handleLogin}
+                  className="bg-gradient-to-r from-primary to-secondary text-white px-3 py-1.5 rounded-full font-medium text-sm hover:shadow-lg transition-all duration-300"
+                >
+                  {islogin ? "Logout" : "Login"}
+                </button>
+              </li>
               <li>
                 <DarkmoodToggler />
               </li>
@@ -117,68 +176,90 @@ function Header() {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden p-2 rounded-full hover:bg-rose-50 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-rose-300"
+            className="md:hidden lg:hidden p-2 rounded-full hover:bg-primary/10 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-primary/30"
             aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X /> : <Menu />}
+            {isMenuOpen ? (
+              <X className="text-main" size={20} />
+            ) : (
+              <Menu className="text-main" size={20} />
+            )}
           </button>
         </div>
 
         {/* Mobile Menu */}
         <div
           className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
-            isMenuOpen ? "max-h-64 opacity-100" : "max-h-0 opacity-0"
+            isMenuOpen ? "max-h-120 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
-          <nav className="py-4 border-t border-rose-100/50 mt-3">
-            <ul className="space-y-3">
+          <nav className="py-4 border-t border-primary/20 mt-3">
+            <ul className="space-y-2">
               <li>
                 <Link
-                  to=""
+                  to="/"
                   onClick={toggleMenu}
-                  className="block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300"
+                  className="flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
                 >
-                  🏠 Home
+                  <span>🏠</span>
+                  <span>Home</span>
                 </Link>
               </li>
               <li>
                 <Link
                   to="/allItems"
                   onClick={toggleMenu}
-                  className="block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300"
+                  className="flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
                 >
-                  🛍️ All Items
+                  <span>🛍️</span>
+                  <span>All Items</span>
                 </Link>
               </li>
               <li>
                 <Link
                   to="/aboutUs"
                   onClick={toggleMenu}
-                  className="block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300"
+                  className="flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
                 >
-                  ℹ️ About Us
+                  <span>ℹ️</span>
+                  <span>About Us</span>
                 </Link>
               </li>
               <li>
                 <Link
                   to="/contactUs"
-                  onClick={() => {
-                    toggleMenu();
-                    handleLogin();
-                  }}
-                  className="block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300"
+                  onClick={toggleMenu}
+                  className="flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
                 >
-                  📞 Contact Us
+                  <span>📞</span>
+                  <span>Contact Us</span>
                 </Link>
               </li>
-
-              <li>
+              {islogin && (
+                <li>
+                  <Link
+                    to="/cartDetails"
+                    onClick={toggleMenu}
+                    className="flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
+                  >
+                    <span>🛒</span>
+                    <span>Cart</span>
+                  </Link>
+                </li>
+              )}
+              <li className="px-4 py-2">
                 <button
-                  onClick={toggleMenu}
-                  className="block px-4 py-2 text-gray-700 font-medium hover:text-rose-600 hover:bg-rose-50/50 rounded-lg transition-all duration-300"
+                  onClick={() => {
+                    toggleMenu();
+                    islogin ? handleLogout() : handleLogin();
+                  }}
+                  className="w-full bg-gradient-to-r from-primary to-secondary text-white px-4 py-3 rounded-full font-medium hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
                 >
-                  LogIn
+                  {islogin ? "Logout" : "Login"}
                 </button>
+              </li>
+              <li className="px-4 py-2 flex justify-center">
+                <DarkmoodToggler />
               </li>
             </ul>
           </nav>
