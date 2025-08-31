@@ -49,7 +49,7 @@ function Home() {
         </div>
 
         <div className="px-4 sm:px-6 max-w-4xl">
-          <p className="text-base sm:text-xl lg:text-2xl text-center text-main/80 leading-relaxed">
+          <p className="text-base text-main sm:text-xl lg:text-2xl text-center text-main/80 leading-relaxed">
             Handpicked fresh flowers and timeless artificial arrangements —
             beauty that lasts or blossoms today.
           </p>
@@ -84,7 +84,7 @@ function Home() {
             <div className="text-2xl sm:text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
               🌹
             </div>
-            <h3 className="font-bold text-main text-lg sm:text-xl mb-2">
+            <h3 className="font-bold  text-lg sm:text-xl mb-2 text-primary">
               Fresh Daily
             </h3>
             <p className="text-main/70 text-sm sm:text-base">
@@ -96,7 +96,7 @@ function Home() {
             <div className="text-2xl sm:text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
               🎨
             </div>
-            <h3 className="font-bold text-main text-lg sm:text-xl mb-2">
+            <h3 className="font-bold  text-lg sm:text-xl mb-2 text-primary">
               Custom Arrangements
             </h3>
             <p className="text-main/70 text-sm sm:text-base">
@@ -108,7 +108,7 @@ function Home() {
             <div className="text-2xl sm:text-3xl mb-3 group-hover:scale-110 transition-transform duration-300">
               🚚
             </div>
-            <h3 className="font-bold text-main text-lg sm:text-xl mb-2">
+            <h3 className="font-bold text-lg sm:text-xl mb-2 text-primary">
               Fast Delivery
             </h3>
             <p className="text-main/70 text-sm sm:text-base">
