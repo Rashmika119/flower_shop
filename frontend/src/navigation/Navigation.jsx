@@ -3,7 +3,7 @@ import AboutUs from "../screens/about/AboutUs.screen";
 import Home from "../screens/home/Home.screen";
 import AllItems from "../screens/allitems/AllItems.screen";
 import Layout from "../components/layout/Layout";
-import CartScreen from "../screens/CartScreen.sreen";
+import CartScreen from "../screens/cart/CartScreen.sreen";
 import ContactUs from "../screens/contact/ContactUs.screen";
 import FlowerDetails from "../screens/flowerdetails/FlowerDetails.screen";
 
