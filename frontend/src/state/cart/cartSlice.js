@@ -15,8 +15,8 @@ const cartSlice = createSlice({
     increaseCountByAmount: (state, action) => {
       state.itemCount += action.payload;
     },
-    decreaseCountByOne: (state, action) => {
-      state.itemCount -= 1;
+    decreaseCountByOne: (state) => {
+      if (state.itemCount > 0) state.itemCount -= 1;
     },
     resetCartCount: (state) => {
       state.itemCount = 0;
@@ -24,27 +24,11 @@ const cartSlice = createSlice({
     addDatatoCart: (state, action) => {
       state.data = action.payload;
     },
-    removeDatafromCart: (state, action) => {
+    removeDatafromCart: (state) => {
       state.data = [];
     },
-    increaseCartItemAmountByid: (state, action) => {
-      state.data = state.data.map((item) =>
-        item.bookId._id === action.payload
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      );
-    },
-    decreaseCartItemAmountByid: (state, action) => {
-      state.data = state.data.map((item) =>
-        item.bookId._id === action.payload && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      );
-    },
     removeitemfromCart: (state, action) => {
-      state.data = state.data.filter(
-        (item) => item.bookId._id !== action.payload
-      );
+      state.data = state.data.filter((item) => item.id !== action.payload);
     },
   },
 });
@@ -54,8 +38,6 @@ export const {
   increaseCountByOne,
   resetCartCount,
   addDatatoCart,
-  increaseCartItemAmountByid,
-  decreaseCartItemAmountByid,
   removeDatafromCart,
   removeitemfromCart,
   decreaseCountByOne,

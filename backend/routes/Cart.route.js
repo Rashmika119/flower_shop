@@ -16,7 +16,7 @@ cartRoute.get("/getCartItems", jwtCheck, getUser, getCartItems);
 cartRoute.post("/addCartItems", jwtCheck, getUser, addCartItems);
 
 cartRoute.post(
-  "/increaseCartItemQuantity/:id",
+  "/increaseCartItemQuantity",
   jwtCheck,
   getUser,
   changeCartItemQuantity

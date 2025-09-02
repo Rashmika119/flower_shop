@@ -1,31 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Trash2, Plus, Minus, Flower2 } from "lucide-react";
 
 function CartItem({ item, onRemove, onQuantityChange }) {
   const [isUpdating, setIsUpdating] = useState(false);
-  const [currentQuantity, setCurrentQuantity] = useState(item.quantity || 1);
+  const [currentQuantity, setCurrentQuantity] = useState(item.quantity);
+  const [newQuantity, setNewQuantity] = useState(item.quantity);
 
-  const handleQuantityChange = async (change) => {
-    const newQuantity = currentQuantity + change;
-
-    if (newQuantity < 1) return;
-
-    try {
-      setIsUpdating(true);
-      setCurrentQuantity(newQuantity);
-
-      // Call the parent component's quantity change handler
-      if (onQuantityChange) {
-        await onQuantityChange(newQuantity);
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      if (newQuantity === currentQuantity) {
+        return;
       }
-    } catch (error) {
-      // Revert quantity on error
-      setCurrentQuantity(currentQuantity);
-      console.error("Error updating quantity:", error);
-    } finally {
-      setIsUpdating(false);
-    }
-  };
+
+      try {
+        setIsUpdating(true);
+        if (onQuantityChange) {
+          await onQuantityChange(newQuantity);
+          setCurrentQuantity(newQuantity);
+        }
+      } catch (error) {
+        setNewQuantity(currentQuantity);
+        console.error("Error updating quantity:", error);
+      } finally {
+        setIsUpdating(false);
+      }
+    }, 300);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [newQuantity]);
 
   const itemTotal = (parseFloat(item.price || 0) * currentQuantity).toFixed(2);
 
@@ -97,8 +101,10 @@ function CartItem({ item, onRemove, onQuantityChange }) {
                   </span>
                   <div className="flex items-center gap-2 bg-background/50 rounded-lg p-1">
                     <button
-                      onClick={() => handleQuantityChange(-1)}
-                      disabled={currentQuantity <= 1 || isUpdating}
+                      onClick={() => {
+                        setNewQuantity((prew) => prew - 1);
+                      }}
+                      disabled={newQuantity <= 1 || isUpdating}
                       className="w-7 h-7 flex items-center justify-center bg-primary/10 hover:bg-primary/20 disabled:bg-gray-100 disabled:cursor-not-allowed rounded-md transition-all duration-200 group/btn"
                     >
                       <Minus className="w-3 h-3 text-primary group-disabled/btn:text-gray-400" />
@@ -108,12 +114,14 @@ function CartItem({ item, onRemove, onQuantityChange }) {
                         <div className="w-4 h-4 border-2 border-primary/30 rounded-full animate-spin border-t-primary mx-auto"></div>
                       ) : (
                         <span className="font-bold text-primary">
-                          {currentQuantity}
+                          {newQuantity}
                         </span>
                       )}
                     </div>
                     <button
-                      onClick={() => handleQuantityChange(1)}
+                      onClick={() => {
+                        setNewQuantity((prew) => prew + 1);
+                      }}
                       disabled={isUpdating}
                       className="w-7 h-7 flex items-center justify-center bg-primary/10 hover:bg-primary/20 disabled:bg-gray-100 disabled:cursor-not-allowed rounded-md transition-all duration-200 group/btn"
                     >

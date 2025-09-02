@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { ShoppingCart, Eye } from "lucide-react";
 import { JWTAxios } from "../../config/axiosConfig";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { increaseCountByOne } from "../../state/cart/cartSlice";
 
 function ItemCard({ item }) {
   const navigate = useNavigate();
-
   const [isAddingtoCart, setIsAddingToCart] = useState(false);
+  const dispatch = useDispatch();
 
   const handleAddToCart = async () => {
     try {
@@ -28,7 +30,7 @@ function ItemCard({ item }) {
           progress: undefined,
           theme: "dark",
         });
-
+        dispatch(increaseCountByOne());
         navigate("/cartDetails");
       }
     } catch (error) {

@@ -4,16 +4,27 @@ import { ShoppingBag, ArrowLeft, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { JWTAxios } from "../../config/axiosConfig";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addDatatoCart,
+  decreaseCountByOne,
+  increaseCountByAmount,
+  removeDatafromCart,
+  removeitemfromCart,
+  resetCartCount,
+} from "../../state/cart/cartSlice";
 
 function CartScreen() {
-  const [cartDetails, setCartDetails] = useState([]);
+  const dispatch = useDispatch();
+  const cartDetails = useSelector((state) => state.cart.data);
   const [isLoading, setIsLoading] = useState(true);
   const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
+  const isLogedIn = useSelector((state) => state.user.isLogedIn);
 
   useEffect(() => {
     fetchCartItems();
-  }, []);
+  }, [isLogedIn]);
 
   const fetchCartItems = async () => {
     try {
@@ -21,8 +32,9 @@ function CartScreen() {
       const response = await JWTAxios.get("/cart/getCartItems");
 
       if (response.status === 200) {
-        const items = response.data.data || [];
-        setCartDetails(items);
+        const items = response.data.data;
+        dispatch(increaseCountByAmount(items.length));
+        dispatch(addDatatoCart(items));
         calculateTotalPrice(items);
       }
     } catch (error) {
@@ -32,7 +44,7 @@ function CartScreen() {
         autoClose: 3000,
         theme: "dark",
       });
-      setCartDetails([]);
+      dispatch(removeDatafromCart());
     } finally {
       setIsLoading(false);
     }
@@ -55,8 +67,8 @@ function CartScreen() {
       );
 
       if (response.status === 200) {
-        // Refresh cart items after successful removal
-        await fetchCartItems();
+        dispatch(removeitemfromCart(flowerId));
+        dispatch(decreaseCountByOne());
         toast.success("Item removed from cart", {
           position: "top-center",
           autoClose: 2000,
@@ -77,13 +89,13 @@ function CartScreen() {
     try {
       // Since there's no clear all endpoint, remove items one by one
       const removePromises = cartDetails.map((item) =>
-        JWTAxios.delete(`/cart/removeCartItem/${item.itemName}`, {
-          data: { flowerId: item.itemName },
-        })
+        JWTAxios.delete(`/cart/removeCartItem/${item.id}`)
       );
 
       await Promise.all(removePromises);
-      setCartDetails([]);
+      dispatch(removeDatafromCart());
+      dispatch(resetCartCount());
+
       setTotalPrice("0.00");
 
       toast.success("Cart cleared successfully", {
@@ -98,27 +110,21 @@ function CartScreen() {
         autoClose: 3000,
         theme: "dark",
       });
-      // Refresh cart to ensure consistency
-      await fetchCartItems();
     }
   };
 
   const handleQuantityChange = async (flowerId, newQuantity) => {
     try {
-      const response = await JWTAxios.post(
-        `/cart/increaseCartItemQuantity/${flowerId}`,
-        {
-          flowerId,
-          quantity: newQuantity,
-        }
-      );
+      const response = await JWTAxios.post("/cart/increaseCartItemQuantity", {
+        flowerId,
+        quantity: newQuantity,
+      });
 
       if (response.status === 200) {
-        // Update local state immediately for better UX
         const updatedItems = cartDetails.map((item) =>
-          item.itemName === flowerId ? { ...item, quantity: newQuantity } : item
+          item.id === flowerId ? { ...item, quantity: newQuantity } : item
         );
-        setCartDetails(updatedItems);
+        dispatch(addDatatoCart(updatedItems));
         calculateTotalPrice(updatedItems);
 
         toast.success("Quantity updated", {
@@ -129,13 +135,13 @@ function CartScreen() {
       }
     } catch (error) {
       console.error("Error updating quantity:", error);
+
       toast.error("Failed to update quantity", {
         position: "top-center",
         autoClose: 3000,
         theme: "dark",
       });
-      // Refresh cart to revert changes
-      await fetchCartItems();
+      throw new Error();
     }
   };
 
@@ -265,9 +271,9 @@ function CartScreen() {
                       type: item.itemType,
                       quantity: item.quantity,
                     }}
-                    onRemove={() => handleRemoveFromCart(item.itemName)}
+                    onRemove={() => handleRemoveFromCart(item.id)}
                     onQuantityChange={(newQuantity) =>
-                      handleQuantityChange(item.itemName, newQuantity)
+                      handleQuantityChange(item.id, newQuantity)
                     }
                   />
                 ))}

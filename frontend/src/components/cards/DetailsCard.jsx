@@ -11,9 +11,12 @@ import {
 import { useNavigate } from "react-router-dom";
 import { JWTAxios } from "../../config/axiosConfig";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { increaseCountByOne } from "../../state/cart/cartSlice";
 
 function DetailsCard({ item }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isAddingToCart, setIsAddingToCart] = useState(false);
   const [quantity, setQuantity] = useState(1);
 
@@ -36,7 +39,7 @@ function DetailsCard({ item }) {
           progress: undefined,
           theme: "dark",
         });
-
+        dispatch(increaseCountByOne());
         navigate("/cartDetails");
       }
     } catch (error) {
