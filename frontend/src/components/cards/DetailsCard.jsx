@@ -1,31 +1,62 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   ShoppingCart,
-  Palette,
-  Flower2,
   Package,
   DollarSign,
   Info,
+  Flower2,
+  Plus,
+  Minus,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { JWTAxios } from "../../config/axiosConfig";
+import { toast } from "react-toastify";
 
 function DetailsCard({ item }) {
   const navigate = useNavigate();
+  const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
-  function handleAddToCart() {
-    const cart = localStorage.getItem("cart");
-    if (!cart) {
-      localStorage.setItem("cart", JSON.stringify([item]));
-      alert("Item added to cart");
-      navigate("/cartDetails");
-      return;
+  const handleAddToCart = async () => {
+    try {
+      setIsAddingToCart(true);
+
+      const response = await JWTAxios.post("/cart/addCartItems", {
+        flowerId: item.id,
+      });
+
+      if (response.status === 200) {
+        toast.success("Item added to cart", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+
+        navigate("/cartDetails");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add item to cart", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } finally {
+      setIsAddingToCart(false);
     }
-    const cartItems = JSON.parse(cart);
-    cartItems.push(item);
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-    alert("Item added to cart");
-    navigate("/cartDetails");
-  }
+  };
+
+  const isOutOfStock = !item.count || item.count === 0;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12">
@@ -85,7 +116,7 @@ function DetailsCard({ item }) {
                   <p className="text-xs sm:text-sm text-main/60 font-medium mb-1">
                     Flower Name
                   </p>
-                  <p className="text-base sm:text-lg text-primary font-bold ">
+                  <p className="text-base sm:text-lg text-primary font-bold">
                     {item.name || "Not specified"}
                   </p>
                 </div>
@@ -141,8 +172,14 @@ function DetailsCard({ item }) {
                     <p className="text-base sm:text-lg font-bold text-primary">
                       {item.count || 0}
                     </p>
-                    <span className="text-xs sm:text-sm text-main bg-surface px-2 py-1 rounded-full">
-                      in stock
+                    <span
+                      className={`text-xs sm:text-sm px-2 py-1 rounded-full ${
+                        isOutOfStock
+                          ? "text-red-500 bg-red-50"
+                          : "text-main bg-surface"
+                      }`}
+                    >
+                      {isOutOfStock ? "out of stock" : "in stock"}
                     </span>
                   </div>
                 </div>
@@ -169,7 +206,7 @@ function DetailsCard({ item }) {
           </div>
         )}
 
-        {/* Action Button */}
+        {/* Quantity Selector & Action Button */}
         <div className="relative group">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-secondary/30 to-primary/30 rounded-2xl sm:rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
           <div className="relative bg-surface/90 backdrop-blur-lg rounded-2xl sm:rounded-3xl p-4 sm:p-6 shadow-xl hover:shadow-2xl transition-all duration-500 border border-primary/10">
@@ -181,21 +218,39 @@ function DetailsCard({ item }) {
                 Add this beautiful flower to your cart and make your special
                 occasion bloom with elegance.
               </p>
+
+              {/* Add to Cart Button */}
               <button
                 onClick={handleAddToCart}
-                disabled={!item.count || item.count === 0}
+                disabled={isOutOfStock || isAddingToCart}
                 className="w-full sm:w-auto bg-gradient-to-r from-primary via-secondary to-primary hover:from-primary/90 hover:via-secondary/90 hover:to-primary/90 disabled:from-gray-400 disabled:via-gray-400 disabled:to-gray-400 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-lg transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:hover:shadow-none flex items-center justify-center gap-2 min-w-[200px] mx-auto"
               >
-                <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
-                <span>
-                  {!item.count || item.count === 0
-                    ? "Out of Stock"
-                    : "Add to Cart"}
-                </span>
+                {isAddingToCart ? (
+                  <>
+                    <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 rounded-full animate-spin border-t-white"></div>
+                    <span>Adding...</span>
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span>
+                      {isOutOfStock
+                        ? "Out of Stock"
+                        : `Add ${quantity} to Cart`}
+                    </span>
+                  </>
+                )}
               </button>
-              {(!item.count || item.count === 0) && (
+
+              {isOutOfStock && (
                 <p className="text-xs sm:text-sm text-red-500 mt-2 font-medium">
                   This item is currently unavailable
+                </p>
+              )}
+
+              {!isOutOfStock && (
+                <p className="text-xs sm:text-sm text-main/60 mt-2">
+                  Total: ${(parseFloat(item.price) * quantity).toFixed(2)}
                 </p>
               )}
             </div>

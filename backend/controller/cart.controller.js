@@ -13,15 +13,18 @@ export const getCartItems = async (req, res) => {
     if (!allCartItems) {
       return res.status(404).json({ message: "cart Items cannot find" });
     }
-    const responseCartItems = allCartItems.map((cartItem) => {
+
+    const responseCartItems = allCartItems.flowers.map((cartItem) => {
       return {
-        quantity: cartItem.flowers.quantity,
-        itemName: cartItem.flowers.flowerId._id,
-        itemImage: cartItem.flowers.flowerId.image,
-        itemType: cartItem.flowers.flowerId.type,
-        itemPrice: cartItem.flowers.flowerId.price,
+        quantity: cartItem.quantity,
+        id: cartItem.flowerId._id,
+        name: cartItem.flowerId.name,
+        itemImage: cartItem.flowerId.image,
+        itemType: cartItem.flowerId.type,
+        itemPrice: cartItem.flowerId.price,
       };
     });
+
     res
       .status(200)
       .json({ message: "get all cart Items", data: responseCartItems });
@@ -30,6 +33,7 @@ export const getCartItems = async (req, res) => {
     return res.status(500).json({ message: "internal server error" });
   }
 };
+
 export const addCartItems = async (req, res) => {
   try {
     const cartId = req.user.cartId;
@@ -37,7 +41,9 @@ export const addCartItems = async (req, res) => {
     const cart = await Cart.findById(cartId);
     const flowerArray = cart.flowers;
 
-    const isFlowerIn = flowerArray.some((f) => f.flowerId === flower);
+    const isFlowerIn = flowerArray.some(
+      (f) => f.flowerId.toString() === flower.toString()
+    );
 
     if (isFlowerIn) {
       return res.status(500).json({ message: "flower is already exist" });
@@ -56,10 +62,11 @@ export const getTotalCountOfCartItems = async (req, res) => {
   try {
     const cartId = req.user.cartId;
     const allCartItems = await Cart.findById(cartId);
-    const totalItemsQuantity = allCartItems.length;
-    return res
-      .status(200)
-      .json({ message: "successfully get the total count of cart items" });
+    const totalItemsQuantity = allCartItems.flowers.length;
+    return res.status(200).json({
+      message: "successfully got the total count of cart items",
+      count: totalItemsQuantity,
+    });
   } catch (error) {
     console.log("can not fetch the total cart item count");
     return res
@@ -74,14 +81,17 @@ export const changeCartItemQuantity = async (req, res) => {
     const cartId = req.user.cartId;
 
     const flower = await Flower.findById(flowerId);
-    const flowerCount = flower.length;
+    const flowerCount = flower.count;
 
-    const cart = await Cart.find({ _id: cartId, "flowers.flowerId": flowerId });
+    const cart = await Cart.findOne({
+      _id: cartId,
+      "flowers.flowerId": flowerId,
+    });
     if (!cart) {
       return res.status(404).json({ message: "cart not found" });
     }
 
-    if (flowerCount < quantity || quantity < 0) {
+    if (flowerCount < quantity || quantity <= 0) {
       return res
         .status(500)
         .json({ message: "the flower count is not in valid range" });
@@ -99,8 +109,8 @@ export const changeCartItemQuantity = async (req, res) => {
 
 export const removeCartItem = async (req, res) => {
   try {
-    const flowerId = req.body.flowerId;
-    const cartId = req.user.cartID;
+    const flowerId = req.params.id;
+    const cartId = req.user.cartId;
 
     const flower = await Cart.find({
       _id: cartId,
@@ -111,7 +121,9 @@ export const removeCartItem = async (req, res) => {
       return res.status(404).json({ message: "flower not found" });
     }
 
-    await flower.update({ $pull: { "flowers.flowerId": flowerId } });
+    await Cart.findByIdAndUpdate(cartId, {
+      $pull: { flowers: { flowerId: flowerId } },
+    });
 
     res
       .status(200)

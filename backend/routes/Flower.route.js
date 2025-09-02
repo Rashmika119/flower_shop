@@ -7,6 +7,7 @@ import {
 const flowerRoute = express.Router();
 
 flowerRoute.get("/getAllFlowers", getAllFlowers);
+
 flowerRoute.get("/getFlowerDetails/:id", getFlowerDetails);
 
 export default flowerRoute;

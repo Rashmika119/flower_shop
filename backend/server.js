@@ -20,8 +20,6 @@ app.use(
   cors({
     origin: "https://localhost:5173", // Your frontend URL
     credentials: true, // This is the key setting
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 

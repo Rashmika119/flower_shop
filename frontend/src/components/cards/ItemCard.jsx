@@ -1,24 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShoppingCart, Eye } from "lucide-react";
+import { JWTAxios } from "../../config/axiosConfig";
+import { toast } from "react-toastify";
 
 function ItemCard({ item }) {
   const navigate = useNavigate();
 
-  function handleAddToCart() {
-    const cart = localStorage.getItem("cart");
-    if (!cart) {
-      localStorage.setItem("cart", JSON.stringify([item]));
-      alert("Item added to cart");
-      navigate("/cartDetails");
-      return;
+  const [isAddingtoCart, setIsAddingToCart] = useState(false);
+
+  const handleAddToCart = async () => {
+    try {
+      setIsAddingToCart(true);
+
+      const response = await JWTAxios.post("/cart/addCartItems", {
+        flowerId: item.id,
+      });
+
+      if (response.status === 200) {
+        toast.success("Item added to cart", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+
+        navigate("/cartDetails");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      toast.error("Failed to add item to cart", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } finally {
+      setIsAddingToCart(false);
     }
-    const cartItems = JSON.parse(cart);
-    cartItems.push(item);
-    localStorage.setItem("cart", JSON.stringify(cartItems));
-    alert("Item added to cart");
-    navigate("/cartDetails");
-  }
+  };
 
   function handleViewDetails() {
     navigate(`/flowerDetails/${item.id}`);
@@ -102,6 +130,7 @@ function ItemCard({ item }) {
 
           <button
             onClick={handleAddToCart}
+            disabled={isAddingtoCart}
             className="flex-1 sm:flex-none flex items-center justify-center gap-1 bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90 text-white px-3 py-2 rounded-lg font-medium text-xs sm:text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg active:scale-95"
           >
             <ShoppingCart className="w-3 h-3 sm:w-4 sm:h-4" />

@@ -2,40 +2,145 @@ import React, { useEffect, useState } from "react";
 import CartItem from "../../components/cards/CartItem";
 import { ShoppingBag, ArrowLeft, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { JWTAxios } from "../../config/axiosConfig";
+import { toast } from "react-toastify";
 
 function CartScreen() {
   const [cartDetails, setCartDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [totalPrice, setTotalPrice] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const cartItems = localStorage.getItem("cart");
-
-    if (cartItems) {
-      setCartDetails(JSON.parse(cartItems));
-    }
-    setIsLoading(false);
+    fetchCartItems();
   }, []);
 
-  const handleRemoveFromCart = (itemId) => {
-    const updatedCart = cartDetails.filter((item) => item.id !== itemId);
-    setCartDetails(updatedCart);
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
+  const fetchCartItems = async () => {
+    try {
+      setIsLoading(true);
+      const response = await JWTAxios.get("/cart/getCartItems");
+
+      if (response.status === 200) {
+        const items = response.data.data || [];
+        setCartDetails(items);
+        calculateTotalPrice(items);
+      }
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+      toast.error("Failed to load cart items", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+      });
+      setCartDetails([]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleClearCart = () => {
-    setCartDetails([]);
-    localStorage.removeItem("cart");
+  const calculateTotalPrice = (items) => {
+    const total = items.reduce((sum, item) => {
+      return sum + parseFloat(item.itemPrice || 0) * (item.quantity || 1);
+    }, 0);
+    setTotalPrice(total.toFixed(2));
   };
 
-  const getTotalPrice = () => {
-    return cartDetails
-      .reduce((total, item) => total + parseFloat(item.price || 0), 0)
-      .toFixed(2);
+  const handleRemoveFromCart = async (flowerId) => {
+    try {
+      const response = await JWTAxios.delete(
+        `/cart/removeCartItem/${flowerId}`,
+        {
+          data: { flowerId },
+        }
+      );
+
+      if (response.status === 200) {
+        // Refresh cart items after successful removal
+        await fetchCartItems();
+        toast.success("Item removed from cart", {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+      toast.error("Failed to remove item from cart", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+      });
+    }
+  };
+
+  const handleClearCart = async () => {
+    try {
+      // Since there's no clear all endpoint, remove items one by one
+      const removePromises = cartDetails.map((item) =>
+        JWTAxios.delete(`/cart/removeCartItem/${item.itemName}`, {
+          data: { flowerId: item.itemName },
+        })
+      );
+
+      await Promise.all(removePromises);
+      setCartDetails([]);
+      setTotalPrice("0.00");
+
+      toast.success("Cart cleared successfully", {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "dark",
+      });
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+      toast.error("Failed to clear cart", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+      });
+      // Refresh cart to ensure consistency
+      await fetchCartItems();
+    }
+  };
+
+  const handleQuantityChange = async (flowerId, newQuantity) => {
+    try {
+      const response = await JWTAxios.post(
+        `/cart/increaseCartItemQuantity/${flowerId}`,
+        {
+          flowerId,
+          quantity: newQuantity,
+        }
+      );
+
+      if (response.status === 200) {
+        // Update local state immediately for better UX
+        const updatedItems = cartDetails.map((item) =>
+          item.itemName === flowerId ? { ...item, quantity: newQuantity } : item
+        );
+        setCartDetails(updatedItems);
+        calculateTotalPrice(updatedItems);
+
+        toast.success("Quantity updated", {
+          position: "top-center",
+          autoClose: 1500,
+          theme: "dark",
+        });
+      }
+    } catch (error) {
+      console.error("Error updating quantity:", error);
+      toast.error("Failed to update quantity", {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "dark",
+      });
+      // Refresh cart to revert changes
+      await fetchCartItems();
+    }
   };
 
   const getTotalItems = () => {
-    return cartDetails.length;
+    return cartDetails.reduce((total, item) => total + (item.quantity || 1), 0);
   };
 
   if (isLoading) {
@@ -75,7 +180,7 @@ function CartScreen() {
           <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
             <button
               onClick={() => navigate(-1)}
-              className="flex items-center gap-2 bg-surface/90 backdrop-blur-sm hover:bg-surface border border-primary/20 hover:border-primary/40 px-3 sm:px-4 py-2 sm:py-3 rounded-full  font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg group"
+              className="flex items-center gap-2 bg-surface/90 backdrop-blur-sm hover:bg-surface border border-primary/20 hover:border-primary/40 px-3 sm:px-4 py-2 sm:py-3 rounded-full font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg group"
             >
               <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform duration-300" />
               <span className="text-sm sm:text-base">Back</span>
@@ -98,7 +203,7 @@ function CartScreen() {
                 </p>
                 <div className="hidden sm:block w-1 h-1 bg-primary/30 rounded-full"></div>
                 <p className="text-lg sm:text-xl font-bold text-primary">
-                  Total: ${getTotalPrice()}
+                  Total: ${totalPrice}
                 </p>
               </div>
             )}
@@ -151,9 +256,19 @@ function CartScreen() {
               <div className="space-y-3 sm:space-y-4">
                 {cartDetails.map((item, index) => (
                   <CartItem
-                    key={`${item.id}-${index}`}
-                    item={item}
-                    onRemove={() => handleRemoveFromCart(item.id)}
+                    key={`${item.itemName}-${index}`}
+                    item={{
+                      id: item.itemName,
+                      name: item.itemName,
+                      image: item.itemImage,
+                      price: item.itemPrice,
+                      type: item.itemType,
+                      quantity: item.quantity,
+                    }}
+                    onRemove={() => handleRemoveFromCart(item.itemName)}
+                    onQuantityChange={(newQuantity) =>
+                      handleQuantityChange(item.itemName, newQuantity)
+                    }
                   />
                 ))}
               </div>
@@ -177,7 +292,7 @@ function CartScreen() {
                         Total Amount
                       </p>
                       <p className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-                        ${getTotalPrice()}
+                        ${totalPrice}
                       </p>
                     </div>
                   </div>
@@ -192,8 +307,8 @@ function CartScreen() {
                     <button
                       className="flex-1 bg-gradient-to-r from-primary via-secondary to-primary hover:from-primary/90 hover:via-secondary/90 hover:to-primary/90 text-white px-6 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
                       onClick={() => {
-                        alert("Proceeding to checkout...");
-                        // Add your checkout logic here
+                        // Navigate to checkout or handle checkout logic
+                        navigate("/checkout");
                       }}
                     >
                       Proceed to Checkout

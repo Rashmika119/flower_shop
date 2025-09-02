@@ -6,17 +6,29 @@ import {
   getTotalCountOfCartItems,
   removeCartItem,
 } from "../controller/cart.controller.js";
+import jwtCheck from "../middleware/JwtCheck.js";
+import { getUser } from "../middleware/getUser.js";
 
 const cartRoute = express.Router();
 
-cartRoute.get("getCartItems", getCartItems);
+cartRoute.get("/getCartItems", jwtCheck, getUser, getCartItems);
 
-cartRoute.post("addCartItems/:id", addCartItems);
+cartRoute.post("/addCartItems", jwtCheck, getUser, addCartItems);
 
-cartRoute.post("increaseCartItemQuantity/:id", changeCartItemQuantity);
+cartRoute.post(
+  "/increaseCartItemQuantity/:id",
+  jwtCheck,
+  getUser,
+  changeCartItemQuantity
+);
 
-cartRoute.get("getTotalCountOfCartItems", getTotalCountOfCartItems);
+cartRoute.get(
+  "/getTotalCountOfCartItems",
+  jwtCheck,
+  getUser,
+  getTotalCountOfCartItems
+);
 
-cartRoute.delete("removeCartItem/:id", removeCartItem);
+cartRoute.delete("/removeCartItem/:id", jwtCheck, getUser, removeCartItem);
 
 export default cartRoute;

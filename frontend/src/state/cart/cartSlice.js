@@ -1,22 +1,64 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialCartState={
-    itemCount:0,
-    data:null
+const initialCartState = {
+  itemCount: 0,
+  data: [],
 };
 
-const cartSlice=createSlice({
-    name:"Cart",
-    initialState:initialCartState,
-    reducers:{
-        increaseItemCartCountByValue:(state,action)=>{
-            state.itemCount += action.payload;
-        }
-    }
-})
+const cartSlice = createSlice({
+  name: "Cart",
+  initialState: initialCartState,
+  reducers: {
+    increaseCountByOne: (state) => {
+      state.itemCount += 1;
+    },
+    increaseCountByAmount: (state, action) => {
+      state.itemCount += action.payload;
+    },
+    decreaseCountByOne: (state, action) => {
+      state.itemCount -= 1;
+    },
+    resetCartCount: (state) => {
+      state.itemCount = 0;
+    },
+    addDatatoCart: (state, action) => {
+      state.data = action.payload;
+    },
+    removeDatafromCart: (state, action) => {
+      state.data = [];
+    },
+    increaseCartItemAmountByid: (state, action) => {
+      state.data = state.data.map((item) =>
+        item.bookId._id === action.payload
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+    },
+    decreaseCartItemAmountByid: (state, action) => {
+      state.data = state.data.map((item) =>
+        item.bookId._id === action.payload && item.quantity > 1
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      );
+    },
+    removeitemfromCart: (state, action) => {
+      state.data = state.data.filter(
+        (item) => item.bookId._id !== action.payload
+      );
+    },
+  },
+});
 
-export const{
-    increaseItemCartCountByValue
-}=cartSlice.actions;
+export const {
+  increaseCountByAmount,
+  increaseCountByOne,
+  resetCartCount,
+  addDatatoCart,
+  increaseCartItemAmountByid,
+  decreaseCartItemAmountByid,
+  removeDatafromCart,
+  removeitemfromCart,
+  decreaseCountByOne,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
