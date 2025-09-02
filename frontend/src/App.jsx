@@ -73,7 +73,9 @@ function App() {
           theme: "dark",
         });
         dispatch(logedOut());
-        await logout();
+        setTimeout(async () => {
+          await logout();
+        }, 1000);
       }
     } catch (error) {
       console.error("User signed In error:", error);
@@ -90,7 +92,9 @@ function App() {
         theme: "dark",
       });
       dispatch(logedOut());
-      await logout();
+      setTimeout(async () => {
+        await logout();
+      }, 1000);
     }
   };
 
