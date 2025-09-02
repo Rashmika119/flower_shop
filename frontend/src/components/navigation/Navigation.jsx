@@ -6,6 +6,7 @@ import Layout from "../layout/Layout";
 import CartScreen from "../../screens/cart/CartScreen.sreen";
 import ContactUs from "../../screens/contact/ContactUs.screen";
 import FlowerDetails from "../../screens/flowerdetails/FlowerDetails.screen";
+import Profile from "../../screens/profile/Profile";
 
 const Navigation = () => {
   return (
@@ -18,6 +19,7 @@ const Navigation = () => {
           <Route path="contactUs" element={<ContactUs />} />
           <Route path="flowerDetails/:id" element={<FlowerDetails />} />
           <Route path="cartDetails" element={<CartScreen />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
       </Routes>
     </BrowserRouter>

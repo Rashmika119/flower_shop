@@ -17,9 +17,6 @@ const userSchema = new mongoose.Schema({
   contactNumber: {
     type: String,
   },
-  country: {
-    type: String,
-  },
   address: {
     type: String,
   },

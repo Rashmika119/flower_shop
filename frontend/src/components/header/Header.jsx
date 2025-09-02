@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Icon, Menu, User, X } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import DarkmoodToggler from "../darkmoodtogler/DarkmodeTogler";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,10 +12,11 @@ import {
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { loginWithRedirect, logout } = useAuth0();
+  const { loginWithRedirect } = useAuth0();
   const islogin = useSelector((state) => state.user.isLogedIn);
   const cartCount = useSelector((state) => state.cart.itemCount);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCartCount = async () => {
@@ -41,10 +42,6 @@ function Header() {
 
   const handleLogin = async () => {
     await loginWithRedirect();
-  };
-
-  const handleLogout = async () => {
-    await logout();
   };
 
   return (
@@ -119,10 +116,12 @@ function Header() {
                   </li>
                   <li>
                     <button
-                      onClick={handleLogout}
+                      onClick={() => {
+                        navigate("profile");
+                      }}
                       className="bg-gradient-to-r from-primary to-secondary text-white px-3 xl:px-4 py-1.5 xl:py-2 rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-300 text-sm xl:text-base"
                     >
-                      Logout
+                      <User />
                     </button>
                   </li>
                 </>
@@ -178,27 +177,42 @@ function Header() {
                 </Link>
               </li>
 
-              {islogin && (
+              {islogin ? (
+                <>
+                  <li>
+                    <Link
+                      to="/cartDetails"
+                      className="relative text-main hover:text-primary transition-colors duration-300 text-lg"
+                    >
+                      🛒
+                      <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-red-500 text-white text-[10px] font-semibold leading-none rounded-full border border-white shadow-sm hover:scale-110 transition-transform duration-200 md:min-w-[20px] md:h-[20px] md:text-[11px] lg:min-w-[22px] lg:h-[22px] lg:text-[12px]">
+                        {cartCount}
+                      </span>
+                    </Link>
+                  </li>
+
+                  <li>
+                    <button
+                      onClick={() => {
+                        navigate("profile");
+                      }}
+                      className="bg-gradient-to-r from-primary to-secondary text-white px-3 xl:px-4 py-1.5 xl:py-2 rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-300 text-sm xl:text-base"
+                    >
+                      <User />
+                    </button>
+                  </li>
+                </>
+              ) : (
                 <li>
-                  <Link
-                    to="/cartDetails"
-                    className="relative text-main hover:text-primary transition-colors duration-300 text-lg"
+                  <button
+                    onClick={handleLogin}
+                    className="bg-gradient-to-r from-primary to-secondary text-white px-3 py-1.5 rounded-full font-medium text-sm hover:shadow-lg transition-all duration-300"
                   >
-                    🛒
-                    <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-red-500 text-white text-[10px] font-semibold leading-none rounded-full border border-white shadow-sm hover:scale-110 transition-transform duration-200 md:min-w-[20px] md:h-[20px] md:text-[11px] lg:min-w-[22px] lg:h-[22px] lg:text-[12px]">
-                      {cartCount}
-                    </span>
-                  </Link>
+                    Login
+                  </button>
                 </li>
               )}
-              <li>
-                <button
-                  onClick={islogin ? handleLogout : handleLogin}
-                  className="bg-gradient-to-r from-primary to-secondary text-white px-3 py-1.5 rounded-full font-medium text-sm hover:shadow-lg transition-all duration-300"
-                >
-                  {islogin ? "Logout" : "Login"}
-                </button>
-              </li>
+
               <li>
                 <DarkmoodToggler />
               </li>
@@ -267,32 +281,46 @@ function Header() {
                   <span>Contact Us</span>
                 </Link>
               </li>
-              {islogin && (
-                <li>
-                  <Link
-                    to="/cartDetails"
-                    onClick={toggleMenu}
-                    className="relative flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
+              {islogin ? (
+                <>
+                  <li>
+                    <Link
+                      to="/cartDetails"
+                      onClick={toggleMenu}
+                      className="relative flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
+                    >
+                      <span>🛒</span>
+                      <span>Cart</span>
+                      <span className="absolute -top-2 -left-0 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-red-500 text-white text-[10px] font-semibold leading-none rounded-full border border-white shadow-sm hover:scale-110 transition-transform duration-200 md:min-w-[20px] md:h-[20px] md:text-[11px] lg:min-w-[22px] lg:h-[22px] lg:text-[12px]">
+                        {cartCount}
+                      </span>
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => {
+                        navigate("profile");
+                      }}
+                      className="bg-gradient-to-r from-primary to-secondary text-white px-3 xl:px-4 py-1.5 xl:py-2 rounded-full font-medium hover:shadow-lg hover:scale-105 transition-all duration-300 text-sm xl:text-base"
+                    >
+                      <User />
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <li className="px-4 py-2">
+                  <button
+                    onClick={() => {
+                      toggleMenu();
+                      handleLogin();
+                    }}
+                    className="w-full bg-gradient-to-r from-primary to-secondary text-white px-4 py-3 rounded-full font-medium hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
                   >
-                    <span>🛒</span>
-                    <span>Cart</span>
-                    <span className="absolute -top-2 -left-0 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-red-500 text-white text-[10px] font-semibold leading-none rounded-full border border-white shadow-sm hover:scale-110 transition-transform duration-200 md:min-w-[20px] md:h-[20px] md:text-[11px] lg:min-w-[22px] lg:h-[22px] lg:text-[12px]">
-                      {cartCount}
-                    </span>
-                  </Link>
+                    Login
+                  </button>
                 </li>
               )}
-              <li className="px-4 py-2">
-                <button
-                  onClick={() => {
-                    toggleMenu();
-                    islogin ? handleLogout() : handleLogin();
-                  }}
-                  className="w-full bg-gradient-to-r from-primary to-secondary text-white px-4 py-3 rounded-full font-medium hover:shadow-lg hover:scale-[1.02] transition-all duration-300"
-                >
-                  {islogin ? "Logout" : "Login"}
-                </button>
-              </li>
+
               <li className="px-4 py-2 flex justify-center">
                 <DarkmoodToggler />
               </li>
