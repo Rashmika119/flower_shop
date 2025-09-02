@@ -112,7 +112,7 @@ function Header() {
                     >
                       🛒
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
-                      <span className=" top-0 left-0 w-3 h-3 rounded-full bg-amber-50">
+                      <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-red-500 text-white text-[10px] font-semibold leading-none rounded-full border border-white shadow-sm hover:scale-110 transition-transform duration-200 md:min-w-[20px] md:h-[20px] md:text-[11px] lg:min-w-[22px] lg:h-[22px] lg:text-[12px]">
                         {cartCount}
                       </span>
                     </Link>
@@ -185,10 +185,10 @@ function Header() {
                     className="relative text-main hover:text-primary transition-colors duration-300 text-lg"
                   >
                     🛒
+                    <span className="absolute -top-2 -right-2 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-red-500 text-white text-[10px] font-semibold leading-none rounded-full border border-white shadow-sm hover:scale-110 transition-transform duration-200 md:min-w-[20px] md:h-[20px] md:text-[11px] lg:min-w-[22px] lg:h-[22px] lg:text-[12px]">
+                      {cartCount}
+                    </span>
                   </Link>
-                  <span className=" top-0 left-0 w-3 h-3 rounded-full bg-amber-50">
-                    {cartCount}
-                  </span>
                 </li>
               )}
               <li>
@@ -272,11 +272,13 @@ function Header() {
                   <Link
                     to="/cartDetails"
                     onClick={toggleMenu}
-                    className="flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
+                    className="relative flex items-center gap-3 px-4 py-3 text-main font-medium hover:text-primary hover:bg-primary/5 rounded-lg transition-all duration-300"
                   >
                     <span>🛒</span>
                     <span>Cart</span>
-                    <span className="absolute">{cartCount}</span>
+                    <span className="absolute -top-2 -left-0 flex items-center justify-center min-w-[18px] h-[18px] px-1 bg-red-500 text-white text-[10px] font-semibold leading-none rounded-full border border-white shadow-sm hover:scale-110 transition-transform duration-200 md:min-w-[20px] md:h-[20px] md:text-[11px] lg:min-w-[22px] lg:h-[22px] lg:text-[12px]">
+                      {cartCount}
+                    </span>
                   </Link>
                 </li>
               )}
