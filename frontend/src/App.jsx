@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import Navigation from "./navigation/Navigation";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserData, logedIn, logedOut } from "./state/user/UserSlice";
 import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
 import { useAxios } from "./config/axiosConfig";
+import Navigation from "./components/navigation/Navigation";
 
 function App() {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();

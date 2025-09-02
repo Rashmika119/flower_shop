@@ -8,6 +8,8 @@ import {
   MessageCircle,
   Heart,
 } from "lucide-react";
+import { useAxios } from "../../config/axiosConfig";
+import { toast } from "react-toastify";
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -31,23 +33,106 @@ function ContactUs() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    // Simulate form submission
-    setTimeout(() => {
-      alert(
-        "Thank you for your message! We'll get back to you within 24 hours."
-      );
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        eventType: "",
-        message: "",
-        preferredContact: "email",
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.message ||
+      !formData.phone ||
+      !formData.eventType ||
+      !formData.preferredContact
+    ) {
+      toast.error("All fields are required", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
       });
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      toast.error("Invalid email format", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+    const phonePattern = /^\+94[0-9]{9}$/;
+    if (!phonePattern.test(formData.phone)) {
+      toast.error("Invalid phone number", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      const response = await useAxios.post("/email/sendemail", formData);
+
+      const data = response.data;
+      if (response.status == 200) {
+        toast.success("message send", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          eventType: "",
+          message: "",
+          preferredContact: "email",
+        });
+      } else {
+        toast.error("message sending error", {
+          position: "top-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+      }
+    } catch (err) {
+      toast.error("message sending error", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: false,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+    } finally {
       setIsSubmitting(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -228,7 +313,7 @@ function ContactUs() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label className="block  font-medium mb-2 text-sm sm:text-base">
-                      Phone Number
+                      Phone Number (+94xxxxxxxxx)
                     </label>
                     <input
                       type="tel"
