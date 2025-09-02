@@ -1,14 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useAuth0 } from "@auth0/auth0-react";
 import DarkmoodToggler from "../darkmoodtogler/DarkmodeTogler";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { JWTAxios } from "../../config/axiosConfig";
+import {
+  increaseCountByAmount,
+  resetCartCount,
+} from "../../state/cart/cartSlice";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { loginWithRedirect, logout } = useAuth0();
   const islogin = useSelector((state) => state.user.isLogedIn);
+  const cartCount = useSelector((state) => state.cart.itemCount);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchCartCount = async () => {
+      try {
+        const responce = await JWTAxios.get("/cart/getTotalCountOfCartItems");
+
+        if (responce.status === 200) {
+          dispatch(resetCartCount());
+          dispatch(increaseCountByAmount((await responce).data.count));
+          console.log("dfvdefrerf");
+        }
+      } catch (error) {
+        console.error("error in get cart data: " + error);
+      }
+    };
+
+    if (islogin) fetchCartCount();
+  }, [islogin]);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -87,6 +112,9 @@ function Header() {
                     >
                       🛒
                       <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-primary to-secondary group-hover:w-full transition-all duration-300"></span>
+                      <span className=" top-0 left-0 w-3 h-3 rounded-full bg-amber-50">
+                        {cartCount}
+                      </span>
                     </Link>
                   </li>
                   <li>
@@ -149,14 +177,18 @@ function Header() {
                   Contact
                 </Link>
               </li>
+
               {islogin && (
                 <li>
                   <Link
                     to="/cartDetails"
-                    className="text-main hover:text-primary transition-colors duration-300 text-lg"
+                    className="relative text-main hover:text-primary transition-colors duration-300 text-lg"
                   >
                     🛒
                   </Link>
+                  <span className=" top-0 left-0 w-3 h-3 rounded-full bg-amber-50">
+                    {cartCount}
+                  </span>
                 </li>
               )}
               <li>
@@ -244,6 +276,7 @@ function Header() {
                   >
                     <span>🛒</span>
                     <span>Cart</span>
+                    <span className="absolute">{cartCount}</span>
                   </Link>
                 </li>
               )}

@@ -33,6 +33,7 @@ function CartScreen() {
 
       if (response.status === 200) {
         const items = response.data.data;
+        dispatch(resetCartCount());
         dispatch(increaseCountByAmount(items.length));
         dispatch(addDatatoCart(items));
         calculateTotalPrice(items);
