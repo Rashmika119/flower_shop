@@ -8,7 +8,8 @@ import { useAxios } from "./config/axiosConfig";
 import Navigation from "./components/navigation/Navigation";
 
 function App() {
-  const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
+  const { isAuthenticated, isLoading, getAccessTokenSilently, logout } =
+    useAuth0();
   const dispatch = useDispatch();
   const islogin = useSelector((state) => state.user.isLogedIn);
   const [loading, setLoading] = useState(false);
@@ -59,6 +60,8 @@ function App() {
         dispatch(logedIn());
         dispatch(addUserData(responce.data.user));
       } else {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("accessToken");
         toast.error("User login fail", {
           position: "top-center",
           autoClose: 5000,
@@ -69,9 +72,13 @@ function App() {
           progress: undefined,
           theme: "dark",
         });
+        dispatch(logedOut());
+        await logout();
       }
     } catch (error) {
       console.error("User signed In error:", error);
+      localStorage.removeItem("userId");
+      localStorage.removeItem("accessToken");
       toast.error("Error login user", {
         position: "top-center",
         autoClose: 5000,
@@ -82,6 +89,8 @@ function App() {
         progress: undefined,
         theme: "dark",
       });
+      dispatch(logedOut());
+      await logout();
     }
   };
 
@@ -100,7 +109,6 @@ function App() {
         return;
       }
 
-      // If authenticated
       await handlelogin();
       setLoading(false);
     };
