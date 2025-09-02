@@ -26,7 +26,6 @@ function Header() {
         if (responce.status === 200) {
           dispatch(resetCartCount());
           dispatch(increaseCountByAmount((await responce).data.count));
-          console.log("dfvdefrerf");
         }
       } catch (error) {
         console.error("error in get cart data: " + error);
@@ -45,7 +44,7 @@ function Header() {
   };
 
   return (
-    <header className="relative top-0 left-0 right-0 z-50 backdrop-blur-md bg-surface border-b border-primary/20 shadow-sm">
+    <header className="relative top-0 left-0 right-0 z-10 backdrop-blur-md bg-surface border-b border-primary/20 shadow-sm">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 sm:py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}

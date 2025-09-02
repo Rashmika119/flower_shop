@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUserData, logedIn, logedOut } from "./state/user/UserSlice";
@@ -11,6 +11,7 @@ function App() {
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
   const dispatch = useDispatch();
   const islogin = useSelector((state) => state.user.isLogedIn);
+  const [loading, setLoading] = useState(false);
 
   const handlelogin = async () => {
     try {
@@ -86,20 +87,63 @@ function App() {
 
   useEffect(() => {
     const fetchAuthStatus = async () => {
-      if (!isAuthenticated && isLoading) {
+      if (isLoading) {
+        setLoading(true);
+        return;
+      }
+
+      if (!isAuthenticated) {
         localStorage.removeItem("userId");
         localStorage.removeItem("accessToken");
         dispatch(logedOut());
-      } else {
-        handlelogin();
+        setLoading(false);
+        return;
       }
+
+      // If authenticated
+      await handlelogin();
+      setLoading(false);
     };
 
     fetchAuthStatus();
-  }, [isAuthenticated]);
+  }, [isAuthenticated, isLoading]);
 
   return (
     <>
+      {loading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white/70 z-500">
+          <div className="w-16 h-16 relative">
+            <div
+              className="absolute top-0 left-1/2 w-3 h-3 bg-primary rounded-full animate-ping"
+              style={{ animationDelay: "0ms" }}
+            ></div>
+            <div
+              className="absolute top-2 right-2 w-3 h-3 bg-secondary rounded-full animate-ping"
+              style={{ animationDelay: "200ms" }}
+            ></div>
+            <div
+              className="absolute bottom-2 right-2 w-3 h-3 bg-primary rounded-full animate-ping"
+              style={{ animationDelay: "400ms" }}
+            ></div>
+            <div
+              className="absolute bottom-0 left-1/2 w-3 h-3 bg-secondary rounded-full animate-ping"
+              style={{ animationDelay: "600ms" }}
+            ></div>
+            <div
+              className="absolute bottom-2 left-2 w-3 h-3 bg-primary rounded-full animate-ping"
+              style={{ animationDelay: "800ms" }}
+            ></div>
+            <div
+              className="absolute top-2 left-2 w-3 h-3 bg-secondary rounded-full animate-ping"
+              style={{ animationDelay: "1000ms" }}
+            ></div>
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-xl">🌸</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Navigation />
 
       <ToastContainer
