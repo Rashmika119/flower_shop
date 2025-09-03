@@ -8,6 +8,7 @@ import cartRoute from "./routes/Cart.route.js";
 import startHTTPSServer from "./config/HttpsServer.js";
 import authRouter from "./routes/Auth.route.js";
 import emailRouter from "./routes/Email.route.js";
+import orderRoute from "./routes/Order.route.js";
 
 dotenv.config();
 
@@ -32,6 +33,8 @@ app.use("/api/cart", cartRoute);
 app.use("/api/auth", authRouter);
 
 app.use("/api/email", emailRouter);
+
+app.use("/api/order", orderRoute);
 
 app.use((err, req, res, next) => {
   console.error(err);

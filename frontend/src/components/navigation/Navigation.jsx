@@ -8,7 +8,7 @@ import ContactUs from "../../screens/contact/ContactUs.screen";
 import FlowerDetails from "../../screens/flowerdetails/FlowerDetails.screen";
 import Profile from "../../screens/profile/Profile";
 import Checkout from "../../screens/checkout/Checkout";
-import Order from "../../screens/order/Order";
+import Orders from "../../screens/order/Order";
 
 const Navigation = () => {
   return (
@@ -23,7 +23,7 @@ const Navigation = () => {
           <Route path="cartDetails" element={<CartScreen />} />
           <Route path="profile" element={<Profile />} />
           <Route path="checkout" element={<Checkout />} />
-          <Route path="order" element={<Order />} />
+          <Route path="orders" element={<Orders />} />
         </Route>
       </Routes>
     </BrowserRouter>

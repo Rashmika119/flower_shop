@@ -47,12 +47,12 @@ const Checkout = () => {
   // Initialize form with user data
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/login");
+      navigate("/");
       return;
     }
 
     if (cartDetails.length === 0) {
-      navigate("/cart");
+      navigate("/");
       return;
     }
 

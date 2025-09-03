@@ -13,6 +13,7 @@ import {
   MapPin,
   Mail,
   Globe,
+  ListOrdered,
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { JWTAxios } from "../../config/axiosConfig";
@@ -302,26 +303,36 @@ const Profile = () => {
                       <Edit2 className="w-5 h-5" />
                       Edit Profile
                     </button>
-
-                    <div className="flex flex-col sm:flex-row gap-3">
-                      <button
-                        onClick={handleLogout}
-                        className="flex-1 flex items-center justify-center gap-2 bg-surface hover:bg-surface/80 border border-primary/30 hover:border-primary/50 text-main px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 active:scale-95"
-                      >
-                        <LogOut className="w-5 h-5" />
-                        Logout
-                      </button>
-
-                      <button
-                        onClick={() => setShowDeleteConfirm(true)}
-                        className="flex-1 flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-500/50 text-red-500 hover:text-red-600 px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 active:scale-95"
-                      >
-                        <Trash2 className="w-5 h-5" />
-                        Delete Account
-                      </button>
-                    </div>
                   </div>
                 )}
+
+                <div className="space-y-3">
+                  <button
+                    onClick={() => navigate("/orders")}
+                    className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-primary via-secondary to-primary text-white px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 hover:shadow-xl active:scale-95"
+                  >
+                    <ListOrdered className="w-5 h-5" />
+                    My Orders
+                  </button>
+
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <button
+                      onClick={handleLogout}
+                      className="flex-1 flex items-center justify-center gap-2 bg-surface hover:bg-surface/80 border border-primary/30 hover:border-primary/50 text-main px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 active:scale-95"
+                    >
+                      <LogOut className="w-5 h-5" />
+                      Logout
+                    </button>
+
+                    <button
+                      onClick={() => setShowDeleteConfirm(true)}
+                      className="flex-1 flex items-center justify-center gap-2 bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 hover:border-red-500/50 text-red-500 hover:text-red-600 px-6 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 active:scale-95"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                      Delete Account
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
