@@ -68,6 +68,21 @@ const Checkout = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+
+    if (name === "deliveryDate") {
+      const selectedDate = new Date(value);
+      const day = selectedDate.getDay();
+
+      if (day === 0) {
+        toast.error("Delivery is not available on Sundays", {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "dark",
+        });
+        return;
+      }
+    }
+
     setOrderData((prev) => ({
       ...prev,
       [name]: value,
@@ -309,9 +324,6 @@ const Checkout = () => {
                           </option>
                           <option value="3:00 PM - 6:00 PM">
                             3:00 PM - 6:00 PM
-                          </option>
-                          <option value="6:00 PM - 9:00 PM">
-                            6:00 PM - 9:00 PM
                           </option>
                         </select>
                       </div>

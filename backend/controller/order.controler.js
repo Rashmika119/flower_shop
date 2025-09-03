@@ -64,6 +64,12 @@ export const createOrder = async (req, res) => {
       });
     }
 
+    if (selectedDate.getDay() === 0) {
+      return res.status(400).json({
+        message: "Delivery is not available on Sundays",
+      });
+    }
+
     if (!/^0\d{9}$/.test(contactNumber)) {
       return res.status(400).json({
         message:
