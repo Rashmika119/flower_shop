@@ -4,7 +4,7 @@ export const getUser = async (req, res, next) => {
   try {
     const sub = req.auth.payload.sub;
 
-    const responce = await User.findByOne({ sub });
+    const responce = await User.findOne({ sub });
 
     if (!responce) {
       return res

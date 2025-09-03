@@ -49,37 +49,75 @@ const Orders = () => {
     }
   };
 
-  const handleDeleteOrder = async (orderId) => {
-    if (
-      !window.confirm(
-        "Are you sure you want to delete this order? This action cannot be undone."
-      )
-    ) {
-      return;
-    }
-
-    try {
-      setDeletingOrderId(orderId);
-      const response = await JWTAxios.delete(`/order/deleteOrder/${orderId}`);
-
-      if (response.status === 200) {
-        setOrders(orders.filter((order) => order._id !== orderId));
-        toast.success("Order deleted successfully", {
-          position: "top-center",
-          autoClose: 2000,
-          theme: "dark",
-        });
-      }
-    } catch (error) {
-      console.error("Error deleting order:", error);
-      toast.error(error.response?.data?.message || "Failed to delete order", {
+  const showConfirmToast = (message, onConfirm) => {
+    toast(
+      ({ closeToast }) => (
+        <div className="flex flex-col gap-3">
+          <p className="text-sm font-medium">{message}</p>
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => {
+                closeToast();
+                onConfirm();
+              }}
+              className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md text-sm"
+            >
+              Yes
+            </button>
+            <button
+              onClick={closeToast}
+              className="bg-gray-300 hover:bg-gray-400 text-black px-3 py-1 rounded-md text-sm"
+            >
+              No
+            </button>
+          </div>
+        </div>
+      ),
+      {
         position: "top-center",
-        autoClose: 3000,
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        closeButton: false,
+        hideProgressBar: true,
         theme: "dark",
-      });
-    } finally {
-      setDeletingOrderId(null);
-    }
+      }
+    );
+  };
+
+  const handleDeleteOrder = (orderId) => {
+    showConfirmToast(
+      "Are you sure you want to delete this order?",
+      async () => {
+        try {
+          setDeletingOrderId(orderId);
+          const response = await JWTAxios.delete(
+            `/order/deleteOrder/${orderId}`
+          );
+
+          if (response.status === 200) {
+            setOrders((prev) => prev.filter((order) => order._id !== orderId));
+            toast.success("Order deleted successfully", {
+              position: "top-center",
+              autoClose: 2000,
+              theme: "dark",
+            });
+          }
+        } catch (error) {
+          console.error("Error deleting order:", error);
+          toast.error(
+            error.response?.data?.message || "Failed to delete order",
+            {
+              position: "top-center",
+              autoClose: 3000,
+              theme: "dark",
+            }
+          );
+        } finally {
+          setDeletingOrderId(null);
+        }
+      }
+    );
   };
 
   const getStatusColor = (status) => {
@@ -162,7 +200,7 @@ const Orders = () => {
                 My Orders
               </h1>
             </div>
-            <p className="text-main/70 text-sm sm:text-base">
+            <p className="text-main text-sm sm:text-base">
               Track and manage your flower orders
             </p>
           </div>
@@ -240,7 +278,7 @@ const Orders = () => {
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                       {/* Delivery Details */}
                       <div className="space-y-4">
-                        <h4 className="font-semibold text-main">
+                        <h4 className="font-semibold text-primary">
                           Delivery Details
                         </h4>
 
@@ -248,7 +286,7 @@ const Orders = () => {
                           <div className="flex items-center gap-3">
                             <Calendar className="w-4 h-4 text-primary" />
                             <span className="text-main/70">Date:</span>
-                            <span className="font-medium text-main">
+                            <span className="font-medium ">
                               {formatDate(order.deliveryDate)}
                             </span>
                           </div>
@@ -256,7 +294,7 @@ const Orders = () => {
                           <div className="flex items-center gap-3">
                             <Clock className="w-4 h-4 text-primary" />
                             <span className="text-main/70">Time:</span>
-                            <span className="font-medium text-main">
+                            <span className="font-medium ">
                               {order.deliveryTime}
                             </span>
                           </div>
@@ -264,7 +302,7 @@ const Orders = () => {
                           <div className="flex items-start gap-3">
                             <MapPin className="w-4 h-4 text-primary mt-0.5" />
                             <span className="text-main/70">Location:</span>
-                            <span className="font-medium text-main">
+                            <span className="font-medium ">
                               {order.deliveryLocation}
                             </span>
                           </div>
@@ -272,7 +310,7 @@ const Orders = () => {
                           <div className="flex items-center gap-3">
                             <Phone className="w-4 h-4 text-primary" />
                             <span className="text-main/70">Contact:</span>
-                            <span className="font-medium text-main">
+                            <span className="font-medium ">
                               {order.contactNumber}
                             </span>
                           </div>
@@ -281,7 +319,7 @@ const Orders = () => {
                             <div className="flex items-start gap-3">
                               <MessageSquare className="w-4 h-4 text-primary mt-0.5" />
                               <span className="text-main/70">Message:</span>
-                              <span className="font-medium text-main">
+                              <span className="font-medium ">
                                 {order.Message}
                               </span>
                             </div>
@@ -291,7 +329,9 @@ const Orders = () => {
 
                       {/* Order Items */}
                       <div className="space-y-4">
-                        <h4 className="font-semibold text-main">Order Items</h4>
+                        <h4 className="font-semibold text-primary">
+                          Order Items
+                        </h4>
 
                         <div className="space-y-3">
                           {order.flowers.map((flower, index) => (
@@ -308,7 +348,7 @@ const Orders = () => {
                                 className="w-10 h-10 object-cover rounded-md border border-primary/20"
                               />
                               <div className="flex-1 min-w-0">
-                                <p className="font-medium text-main text-sm truncate">
+                                <p className="font-medium  text-sm truncate">
                                   {flower.flowerId?.name || "Unknown Flower"}
                                 </p>
                                 <p className="text-main/60 text-xs">

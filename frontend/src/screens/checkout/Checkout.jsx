@@ -44,16 +44,15 @@ const Checkout = () => {
     return cartDetails.reduce((total, item) => total + (item.quantity || 1), 0);
   };
 
-  // Initialize form with user data
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/");
       return;
-    }
-
-    if (cartDetails.length === 0) {
-      navigate("/");
-      return;
+    } else {
+      if (cartDetails.length === 0) {
+        navigate("/");
+        return;
+      }
     }
 
     if (userData) {
@@ -65,7 +64,7 @@ const Checkout = () => {
         contactNumber: userData.contactNumber || "",
       });
     }
-  }, [userData, isLoggedIn, cartDetails.length, navigate]);
+  }, [userData, isLoggedIn]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
