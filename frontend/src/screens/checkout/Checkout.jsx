@@ -147,7 +147,6 @@ const Checkout = () => {
       const response = await JWTAxios.post("/order/createOrder", orderPayload);
 
       if (response.status === 200 || response.status === 201) {
-        // Clear cart after successful order
         dispatch(removeDatafromCart());
         dispatch(resetCartCount());
 
@@ -157,7 +156,6 @@ const Checkout = () => {
           theme: "dark",
         });
 
-        // Navigate to order confirmation or orders page
         navigate("/orders");
       }
     } catch (error) {
@@ -172,7 +170,6 @@ const Checkout = () => {
     }
   };
 
-  // Get tomorrow's date as minimum date
   const getTomorrowDate = () => {
     const tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);

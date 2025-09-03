@@ -10,6 +10,11 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  sub: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   picture: {
     type: String,
     required: true,
