@@ -1,0 +1,272 @@
+[
+  {
+    "name": "White Lily Bouquet",
+    "color": "White",
+    "price": 52,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=400&h=400&fit=crop",
+    "description": "Elegant white lilies symbolizing purity and rebirth. Perfect for special occasions.",
+    "count": 6
+  },
+  {
+    "name": "White Carnation Bundle",
+    "color": "White",
+    "price": 22.5,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1563552436-75c567ee1617?w=400&h=400&fit=crop",
+    "description": "Pure white carnations that are affordable and long-lasting. Perfect for any occasion.",
+    "count": 12
+  },
+  {
+    "name": "White Calla Lilies",
+    "color": "White",
+    "price": 41.8,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=400&h=400&fit=crop",
+    "description": "Elegant white calla lilies with their distinctive trumpet shape. Perfect for weddings.",
+    "count": 7
+  },
+  {
+    "name": "Purple Artificial Orchid",
+    "color": "Purple",
+    "price": 48.9,
+    "type": "Artificial",
+    "image": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=400&h=400&fit=crop",
+    "description": "Realistic artificial purple orchid that requires no watering or special care. Permanently beautiful.",
+    "count": 1
+  },
+  {
+    "name": "Purple Orchid Plant",
+    "color": "Purple",
+    "price": 42.85,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=400&h=400&fit=crop",
+    "description": "Elegant purple orchid in a decorative pot. A long-lasting flowering plant.",
+    "count": 1
+  },
+  {
+    "name": "Purple Lavender Stems",
+    "color": "Purple",
+    "price": 19.99,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1611909023032-2d4b3a2e78b1?w=400&h=400&fit=crop",
+    "description": "Fragrant lavender stems perfect for aromatherapy and decoration. Fresh cut stems.",
+    "count": 15
+  },
+  {
+    "name": "Mixed Color Tulips",
+    "color": "Mixed",
+    "price": 37.85,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1520763185298-1b434c919102?w=400&h=400&fit=crop",
+    "description": "Colorful tulip mix including red, yellow, pink, and purple varieties. Spring's finest offering.",
+    "count": 16
+  },
+  {
+    "name": "Yellow Daffodils",
+    "color": "Yellow",
+    "price": 29.9,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1520763185298-1b434c919102?w=400&h=400&fit=crop",
+    "description": "Cheerful yellow daffodils announcing the arrival of spring. Bright and uplifting.",
+    "count": 12
+  },
+  {
+    "name": "Red Carnations",
+    "color": "Red",
+    "price": 25.6,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1563552436-75c567ee1617?w=400&h=400&fit=crop",
+    "description": "Classic red carnations representing deep love and admiration. Long-lasting and affordable.",
+    "count": 10
+  },
+  {
+    "name": "Yellow Freesia",
+    "color": "Yellow",
+    "price": 32.4,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1569166276860-7e2c4b07e9bb?w=400&h=400&fit=crop",
+    "description": "Fragrant yellow freesia flowers with their distinctive sweet scent. Perfect for indoor arrangements.",
+    "count": 11
+  },
+  {
+    "name": "White Gardenias",
+    "color": "White",
+    "price": 46.3,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=400&h=400&fit=crop",
+    "description": "Fragrant white gardenias with their waxy, perfect petals. Symbol of purity and sweet love.",
+    "count": 8
+  },
+  {
+    "name": "Sunflower Bundle",
+    "color": "Yellow",
+    "price": 28.5,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1597848212624-e4d916d8168d?w=400&h=400&fit=crop",
+    "description": "Bright and cheerful sunflowers that bring sunshine to any room. Fresh from local farms.",
+    "count": 8
+  },
+  {
+    "name": "Pink Peony Bunch",
+    "color": "Pink",
+    "price": 68.25,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1588770433990-cef5edd69bd0?w=400&h=400&fit=crop",
+    "description": "Luxurious pink peonies with their full, ruffled blooms. Limited seasonal availability.",
+    "count": 9
+  },
+  {
+    "name": "Orange Bird of Paradise",
+    "color": "Orange",
+    "price": 62.95,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=400&h=400&fit=crop",
+    "description": "Exotic orange bird of paradise flowers with their distinctive crane-like appearance. Tropical beauty.",
+    "count": 3
+  },
+  {
+    "name": "Pink Azalea Plant",
+    "color": "Pink",
+    "price": 39.99,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1588770433990-cef5edd69bd0?w=400&h=400&fit=crop",
+    "description": "Beautiful pink azalea flowers freshly cut. Perfect for spring arrangements.",
+    "count": 8
+  },
+  {
+    "name": "Red Rose Bouquet",
+    "color": "Red",
+    "price": 45.99,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&h=400&fit=crop",
+    "description": "Classic dozen red roses wrapped in elegant paper. Perfect for expressing love and romance.",
+    "count": 12
+  },
+  {
+    "name": "Blue Delphinium",
+    "color": "Blue",
+    "price": 44.2,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1594736797933-d0c6bb5ed0f1?w=400&h=400&fit=crop",
+    "description": "Tall, elegant blue delphinium spikes. Perfect for creating height in floral arrangements.",
+    "count": 6
+  },
+  {
+    "name": "Orange Gerbera Daisies",
+    "color": "Orange",
+    "price": 31.4,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=400&h=400&fit=crop",
+    "description": "Vibrant orange gerbera daisies that radiate happiness and positive energy.",
+    "count": 10
+  },
+  {
+    "name": "Blue Hydrangea Bouquet",
+    "color": "Blue",
+    "price": 38.9,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1594736797933-d0c6bb5ed0f1?w=400&h=400&fit=crop",
+    "description": "Full and fluffy blue hydrangeas. Perfect for creating stunning centerpieces.",
+    "count": 4
+  },
+  {
+    "name": "White Baby's Breath",
+    "color": "White",
+    "price": 18.75,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&fit=crop",
+    "description": "Delicate white baby's breath flowers. Perfect for adding texture and elegance to bouquets.",
+    "count": 5
+  },
+  {
+    "name": "Pink Cherry Blossoms",
+    "color": "Pink",
+    "price": 51.75,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1588770433990-cef5edd69bd0?w=400&h=400&fit=crop",
+    "description": "Delicate pink cherry blossom branches. Symbol of renewal and the fleeting nature of life.",
+    "count": 4
+  },
+  {
+    "name": "Mixed Wildflowers",
+    "color": "Mixed",
+    "price": 24.99,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=400&fit=crop",
+    "description": "A rustic collection of wildflowers including daisies, baby's breath, and various seasonal blooms.",
+    "count": 20
+  },
+  {
+    "name": "Premium Mixed Bouquet",
+    "color": "Mixed",
+    "price": 75.99,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&h=400&fit=crop",
+    "description": "Our signature premium mixed bouquet featuring roses, lilies, and seasonal flowers. Florist's choice selection.",
+    "count": 18
+  },
+  {
+    "name": "Red Anthurium",
+    "color": "Red",
+    "price": 34.6,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1566664068314-1a4c29b7c6b3?w=400&h=400&fit=crop",
+    "description": "Exotic red anthurium with heart-shaped blooms. Tropical and eye-catching.",
+    "count": 3
+  },
+  {
+    "name": "Orange Marigolds",
+    "color": "Orange",
+    "price": 18.25,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1574684891174-df6b02ab38d7?w=400&h=400&fit=crop",
+    "description": "Vibrant orange marigolds that bloom abundantly. Perfect for adding warm colors to gardens.",
+    "count": 14
+  },
+  {
+    "name": "Pink Tulip Arrangement",
+    "color": "Pink",
+    "price": 35.75,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1520763185298-1b434c919102?w=400&h=400&fit=crop",
+    "description": "Beautiful pink tulips arranged in a elegant bouquet. Perfect for spring celebrations.",
+    "count": 15
+  },
+  {
+    "name": "Yellow Chrysanthemums",
+    "color": "Yellow",
+    "price": 26.75,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1569166276860-7e2c4b07e9bb?w=400&h=400&fit=crop",
+    "description": "Bright yellow chrysanthemums representing joy and optimism. Long-lasting blooms.",
+    "count": 8
+  },
+  {
+    "name": "Pink Silk Roses",
+    "color": "Pink",
+    "price": 55,
+    "type": "Artificial",
+    "image": "https://images.unsplash.com/photo-1518895949257-7621c3c786d7?w=400&h=400&fit=crop",
+    "description": "High-quality silk roses that look incredibly real. No maintenance required, lasts forever.",
+    "count": 12
+  },
+  {
+    "name": "Green Eucalyptus",
+    "color": "Green",
+    "price": 16.5,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=400&h=400&fit=crop",
+    "description": "Fresh eucalyptus branches with silvery-green leaves. Perfect for adding greenery to arrangements.",
+    "count": 8
+  },
+  {
+    "name": "Purple Iris Bouquet",
+    "color": "Purple",
+    "price": 33.75,
+    "type": "Fresh",
+    "image": "https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=400&h=400&fit=crop",
+    "description": "Majestic purple iris flowers with their unique sword-like petals. Symbol of wisdom and valor.",
+    "count": 9
+  }
+]
