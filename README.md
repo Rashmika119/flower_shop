@@ -35,8 +35,8 @@ View past and upcoming purchases.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/pubudu2003060/cozy-book-shop
-   cd cozy-book-shop
+   git clone https://github.com/Rashmika119/flower_shop
+   cd flower_shop
    ```
 
 2. **Install backend dependencies**
